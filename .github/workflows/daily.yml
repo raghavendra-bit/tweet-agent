@@ -1,0 +1,25 @@
+name: Daily Tweet Agent
+
+on:
+  schedule:
+    - cron: "30 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install groq requests gspread google-auth python-dotenv
+
+      - run: echo '${{ secrets.GOOGLE_CREDS }}' > google_creds.json
+
+      - run: python daily_tweet_agent.py
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
