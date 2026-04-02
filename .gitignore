@@ -1,0 +1,4 @@
+.env
+google_creds.json
+agent.log
+__pycache__/
